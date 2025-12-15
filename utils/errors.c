@@ -6,13 +6,20 @@
 /*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 20:10:01 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/14 14:48:48 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/15 17:47:09 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	error_exit(const char *msg)
+void	command_not_found(char *cmd)
+{
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(cmd, 2);
+	ft_putstr_fd(": command not found\n", 2);
+}
+
+void	error_exit(char *msg)
 {
 	ft_putstr_fd(RED, STDERR_FILENO);
 	ft_putstr_fd(msg, STDERR_FILENO);
@@ -52,16 +59,16 @@ void	handle_execve_error(char *cmd)
 	}
 }
 
-int	check_numeric_arg(const char *arg)
+int	check_numeric_arg(char *cmd, char *arg)
 {
-	long num;
+	int num;
 
-	if (!ft_isdigit(arg))
+	num = ft_atol(arg);
+	if (!ft_isdigit(num))
 	{
 		error_msg(cmd, arg, "numeric argument required\n");
 		return (0);
 	}
-	num = ft_atol(arg);
 	if (num < INT_MIN || num > INT_MAX)
 	{
 		error_msg(cmd, arg, "numeric argument required\n");

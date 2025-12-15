@@ -6,7 +6,7 @@
 /*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 03:29:03 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/15 08:43:47 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/15 18:33:19 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ typedef struct s_token
 /* ======== STRUTTURA REDIRECTION ==== */
 typedef struct s_redir
 {
-	t_token_type			type; // < o > o >> o <<
+	t_token_type		type; // < o > o >> o <<
 	char				*filename; // nome del file o delimitatore
-	struct s_redirection	*next;
+	struct s_redir		*next;
 } t_redir;
 
 /* ======== STRUTTURA COMANDO ==== */
@@ -82,7 +82,7 @@ typedef struct s_cmd
 {
 	char			**args; // ["echo", "hello", NULL]
 	t_redir			*redirs; // lista di redirezioni
-	struct s_command	*next; // per le pipe
+	struct s_cmd	*next; // per le pipe
 } t_cmd;
 
 /* ======== VARIABILE D'AMBIENTE ==== */
@@ -137,7 +137,8 @@ int		check_syntax(t_token *tokens);
 
 /* ======== EXPANDER (Espansione $VAR) ==== */
 void		expand_cmdx_variables(t_cmd *cmds, t_env *env, int exit_status);
-char		*get_env_value(char **envp, char *key);
+char		*get_env_value(t_env *env, const char *key);
+char		*get_env_value_from_array(char **env, char *key);
 int			count_env(char **envp);
 char		**copy_env(char **envp);
 ////static int	is_valid_var_char(char c);
@@ -181,10 +182,10 @@ int			builtin_exit(char **args, t_shell *shell);
 
 /* ======== REDIRECTION ======== */
 int				handle_redirections(t_redir *redirs);
-int				open_redir_in(const char *filename);
-int				open_redir_out(const char *filename);
-int				open_redir_append(const char *filename);
-int				handle_heredoc(const char *delimiter);
+int				open_redir_in(char *filename);
+int				open_redir_out(char *filename);
+int				open_redir_append(char *filename);
+//static int		handle_heredoc(const char *delimiter);
 //static t_redir	*create_redir(t_token_type type, char *filename);
 //static void		redir_add_back(t_redir **redirs, t_redir *new_redir);
 //static t_redir	*parse_redirections(t_token **current);
@@ -202,10 +203,10 @@ void	free_split(char **split);
 void	free_redirs(t_redir *redirs);
 
 /* ======== ERRORS ======= */
-void	error_exit(const char *msg);
+void	error_exit(char *msg);
 void	error_msg(char *cmd, char *arg, char *msg);
 void	handle_execve_error(char *cmd);
-int		check_numeric_arg(const char *arg);
+int		check_numeric_arg(char *cmd, char *arg);
 
 /* ======== SIGNALS ======= */
 void	setup_signals(void);
@@ -215,6 +216,7 @@ void	handler_sigint(int sig);
 void	handler_sigquit(int sig);
 
 /* ======== UTILS ======= */
+void	command_not_found(char *cmd);
 //static int		find_equal_sign(char *str);
 //static t_env		*create_env_node(char *env_str);
 //static void		env_add_back(t_env **env, t_env *new_node);

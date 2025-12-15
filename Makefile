@@ -6,7 +6,7 @@
 #    By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/30 20:06:02 by gifanell          #+#    #+#              #
-#    Updated: 2025/12/15 08:54:24 by gifanell         ###   ########.fr        #
+#    Updated: 2025/12/15 18:27:29 by gifanell         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ SRCS =		./main.c \
 			./utils/free.c \
 			./utils/errors.c \
 			./utils/init_env.c \
-			./redirections/redirections.c \
+			./redirection/redirections.c \
 			./parser/parser.c \
 			./parser/parser_utils.c \
 			./lexer/lexer.c \

@@ -6,7 +6,7 @@
 /*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 02:01:10 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/01 02:18:07 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/15 18:23:38 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,24 +74,24 @@ static void	env_add_back(t_env **env, t_env *new_node)
 
 t_env	*init_env(char **envp)
 {
-	t_env	*env;
+	t_env	*env_list;
 	t_env	*new_node;
 	int		i;
 
-	env = NULL;
+	env_list = NULL;
 	i = 0;
 	while (envp[i])
 	{
 		new_node = create_env_node(envp[i]);
 		if (!new_node)
 		{
-			free_env(envp);
+			free_env(env_list);
 			return (NULL);
 		}
-		env_add_back(&envp, new_node);
+		env_add_back(&env_list, new_node);
 		i++;
 	}
-	return (envp);
+	return (env_list);
 }
 
 char	*get_env_value(t_env *env, const char *key)
@@ -100,7 +100,7 @@ char	*get_env_value(t_env *env, const char *key)
 		return (NULL);
 	while (env)
 	{
-		if (ft_strcmp(env->key, key) == 0)
+		if (ft_strncmp(env->key, key, ft_strlen(key)) == 0)
 			return (env->value);
 		env = env->next;
 	}

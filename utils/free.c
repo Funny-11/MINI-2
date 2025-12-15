@@ -6,7 +6,7 @@
 /*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 20:10:10 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/15 08:58:18 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/15 17:33:49 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,33 +40,33 @@ void	free_tokens(t_token *tokens)
 	}
 }
 
-void	free_redirs(t_redir *redirs)
+void	free_redirs(t_redir *redir)
 {
 	t_redir	*tmp;
 
-	while (redirs)
+	while (redir)
 	{
-		tmp = redirs->next;
-		free(redirs->filename);
-		free(redirs);
-		redirs = tmp;
+		tmp = redir->next;
+		free(redir->filename);
+		free(redir);
+		redir = tmp;
 	}
 }
 
-void	free_cmds(t_cmd *cmds)
+void	free_cmds(t_cmd *cmd)
 {
 	t_cmd	*tmp;
 
-	while (cmds)
+	while (cmd)
 	{
-		tmp = cmds->next;
+		tmp = cmd->next;
 
-		if (cmds->args)
-			free_split(cmds->args);
-		if ( cmds->redirs)
-			free_redirs(cmds->redirs);
-		free(cmds);
-		cmds = tmp;
+		if (cmd->args)
+			free_split(cmd->args);
+		if ( cmd->redirs)
+			free_redirs(cmd->redirs);
+		free(cmd);
+		cmd = tmp;
 	}
 }
 

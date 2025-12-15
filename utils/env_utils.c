@@ -6,7 +6,7 @@
 /*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 03:40:00 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/15 08:57:21 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/15 18:16:24 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	free_envp(char **envp)
 	free(envp);
 }
 
-char	*get_env_value(char **envp, char *key)
+char	*get_env_value_from_array(char **envp, char *key)
 {
 	int		i;
 	size_t	key_len;

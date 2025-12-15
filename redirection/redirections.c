@@ -6,7 +6,7 @@
 /*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 03:20:21 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/15 03:28:19 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/15 18:28:47 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int handle_heredoc(const char *delimiter)
 	while (11)
 	{
 		line = readline("> ");
-		if (!line || ft_strcmp(line, delimiter) == 0)
+		if (!line || ft_strncmp(line, delimiter, ft_strlen(line)) == 0)
 		{
 			free(line);
 			break ;
@@ -86,7 +86,7 @@ static int	handle_single_redir(t_redir *redir)
 		fd = open_redir_in(redir->filename);
 	else if (redir->type == TOKEN_REDIR_OUT)
 		fd = open_redir_out(redir->filename);
-	else if (redir->type == TOKEN_REDIR_OUT_APPEND)
+	else if (redir->type == TOKEN_REDIR_APPEND)
 		fd = open_redir_append(redir->filename);
 	else if (redir->type == TOKEN_HEREDOC)
 		fd = handle_heredoc(redir->filename);
