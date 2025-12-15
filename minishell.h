@@ -6,7 +6,7 @@
 /*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 03:29:03 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/15 07:26:11 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/15 08:43:47 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,10 +137,10 @@ int		check_syntax(t_token *tokens);
 
 /* ======== EXPANDER (Espansione $VAR) ==== */
 void		expand_cmdx_variables(t_cmd *cmds, t_env *env, int exit_status);
-char		*get_env_value(t_env *envp, const char *key);
+char		*get_env_value(char **envp, char *key);
 int			count_env(char **envp);
 char		**copy_env(char **envp);
-//static int	is_valid_var_char(char c);
+////static int	is_valid_var_char(char c);
 //static char	*extract_var_name(const char *str, int *i);
 //static char *get_var_value(t_env *env, const char *var_name, int exit_status);
 //static char	*expand_var_in_string(char *str, int *i, t_env *env, int exit_status);

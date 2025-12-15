@@ -6,7 +6,7 @@
 #    By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/30 20:06:02 by gifanell          #+#    #+#              #
-#    Updated: 2025/12/15 06:59:54 by gifanell         ###   ########.fr        #
+#    Updated: 2025/12/15 08:54:24 by gifanell         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = minishell
 CC = CC
 
 CFLAGS = -Wall -Werror -Wextra -g -Ilibft
-INCLUDES = -I./includes -I./libft
+INCLUDES = -I. -I./libft
 
 #/* ───── LIBRERIE ESTERNE ───── */
 LIBFT = ./libft
@@ -27,6 +27,8 @@ YELLOW = \033[0;33m
 RESET = \033[0m
 
 #/* ───── FILE SORGENTI ───── */
+#SRCS = $(shell find srcs -name "*.c")#
+
 SRCS =		./main.c \
 			./signals.c \
 			./utils/utils.c \
@@ -50,10 +52,10 @@ SRCS =		./main.c \
 			./builtins/export.c \
 			./builtins/pwd.c \
 			./builtins/unset.c \
-			./executor/exec_utils.c \
-			./executor/executor.c \
 
 OBJS = $(SRCS:.c=.o)
+
+all: $(NAME)
 
 $(NAME): libft/libft.a $(OBJS)
 	@echo "$(YELLOW)Linking $(NAME)...$(RESET)"
@@ -68,8 +70,6 @@ libft/libft.a:
 	@echo "$(YELLOW)Making libft...⏳$(RESET)"
 	@make -C $(LIBFT)
 	@echo "$(GREEN)✓ Libft ready$(RESET)"
-
-all: $(NAME)
 
 clean:
 		@echo "$(RED)Pulizia file oggetto...🧽🪣$(RESET)"

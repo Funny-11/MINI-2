@@ -6,7 +6,7 @@
 /*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 20:10:10 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/01 02:41:41 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/15 08:58:18 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	free_tokens(t_token *tokens)
 	}
 }
 
-static void	free_redirs(t_redir *redirs)
+void	free_redirs(t_redir *redirs)
 {
 	t_redir	*tmp;
 

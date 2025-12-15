@@ -6,7 +6,7 @@
 /*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 03:40:00 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/14 14:17:12 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/15 08:57:21 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	**copy_env(char **envp)
 			//Se malloc fallisce, libera tutto
 			while (--i >= 0)
 				free(new_env[i]);
-			free_env(new_env);
+			free_env((t_env *)new_env);
 			return (NULL);
 		}
 		i++;
@@ -65,7 +65,7 @@ void	free_envp(char **envp)
 	free(envp);
 }
 
-char	*get_env_value(char **envp, const char *key)
+char	*get_env_value(char **envp, char *key)
 {
 	int		i;
 	size_t	key_len;
