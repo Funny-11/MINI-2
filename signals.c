@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin@42.fr <marvin>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 00:16:37 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/15 07:30:22 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/28 15:21:39 by marvin@42.f      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	handle_sigint(int sig)
 {
 	(void)sig;
-	
-	g_exit_status = 130;
+
+	g_last_signal = 130;
 	ft_putstr_fd("\n", STDOUT_FILENO);
 	rl_on_new_line();
 	rl_redisplay();
@@ -56,7 +56,7 @@ void	setup_heredoc_signals(void)
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
 	sigaction(SIGQUIT, &sa, NULL);
-	
+
 	//SIGINT durante heredoc: comportamento speciale
 	//Interrompe l'input e ritorna al prompt
 	sa.sa_handler = SIG_DFL;

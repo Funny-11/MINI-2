@@ -41,7 +41,8 @@ void	error_msg(char *cmd, char *arg, char *msg)
 		}
 		ft_putstr_fd(": ", STDERR_FILENO);
 	}
-	ft_putstr_fd(msg, STDERR_FILENO);
+	if (msg)
+		ft_putstr_fd(msg, STDERR_FILENO);
 	ft_putstr_fd(RESET, STDERR_FILENO);
 }
 

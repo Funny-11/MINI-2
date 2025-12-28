@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin@42.fr <marvin>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 20:07:34 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/15 07:11:40 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/28 15:20:10 by marvin@42.f      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	is_redirection(t_token_type type)
 {
 	return (type == TOKEN_REDIR_IN || type == TOKEN_REDIR_OUT
-		|| type == TOKEN_REDIR_OUT_APPEND || type == TOKEN_HEREDOC);
+		|| type == TOKEN_REDIR_APPEND || type == TOKEN_HEREDOC);
 }
 
 int	check_syntax(t_token *tokens)
@@ -29,7 +29,8 @@ int	check_syntax(t_token *tokens)
 	{
 		if (current->type == TOKEN_PIPE)
 		{
-			if (!current->next || current->next->type == TOKEN_EOF || tmp->next->type == TOKEN_PIPE)
+			if (!current->next || current->next->type == TOKEN_EOF
+				|| current->next->type == TOKEN_PIPE)
 				return (0);
 		}
 		if (is_redirection(current->type))
@@ -42,7 +43,7 @@ int	check_syntax(t_token *tokens)
 	return (1);
 }
 
-static int	count_tokens_args(t_token *tokens)
+int	count_tokens_args(t_token *tokens)
 {
 	int	count;
 
@@ -103,10 +104,10 @@ static t_redir	*parse_redirections(t_token **current)
 		{
 			while (redirs)
 			{
-				next_redir = redirs->next;
+				new_redir = redirs->next;
 				free(redirs->filename);
 				free(redirs);
-				redirs = next_redir;
+				redirs = new_redir;
 			}
 			return (NULL);
 		}
@@ -122,7 +123,7 @@ static char	**parse_args(t_token **current)
 	int		count;
 	int		i;
 
-	count = count_args(*current);
+	count = token_count(*current);
 	args = malloc(sizeof(char *) * (count + 1));
 	if (!args)
 		error_exit(ERR_MALLOC);
@@ -151,6 +152,11 @@ static t_cmd	*parse_single_command(t_token **current)
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		error_exit(ERR_MALLOC);
+	// TODO: args and redirections can be interlaced,
+	// so instead of doing a sequential parsing, we should
+	// `parse_args` and `parse_redirections` without updating `current`
+	// and then update `current` afterwards
+	// e.g. `ls > out` or `> out ls` or `> out ls > out2`
 	cmd->args = parse_args(current);
 	cmd->redirs = parse_redirections(current);
 	cmd->next = NULL;
@@ -178,11 +184,7 @@ t_cmd	*parser(t_token *tokens)
 			free_cmds(cmd_list);
 			return (NULL);
 		}
-		if (!cmd_list)
-			cmd_list = new_cmd;
-		else
-			last->next = new_cmd;
-		last = new_cmd;
+		cmd_list = cmd_list_add_back(&cmd_list, new_cmd);
 		if (current && current->type == TOKEN_PIPE)
 			current = current->next;
 	}

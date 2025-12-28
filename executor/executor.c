@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin@42.fr <marvin>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 20:08:07 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/14 19:43:11 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/28 15:13:36 by marvin@42.f      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static char	**env_to_arr(t_env *env)
 {
 	char	**envp;
-	t_env	tmp;
+	t_env	*tmp;
 	int		count;
 	int		i;
 
@@ -33,7 +33,7 @@ static char	**env_to_arr(t_env *env)
 	i = 0;
 	while (tmp)
 	{
-		envp[i] = ft_strdup(tmp->var);
+		envp[i] = ft_strdup(tmp->value);
 		if (!envp[i])
 		{
 			while (i-- >= 0)
@@ -50,7 +50,7 @@ static char	**env_to_arr(t_env *env)
 
 static char	*find_command(char *cmd, t_env *env)
 {
-	char	**path_env;
+	char	*path_env;
 	char	**paths;
 	char	*full_path;
 	char	*tmp;
@@ -118,11 +118,11 @@ void	exec_simple_cmd(t_cmd *cmd, t_shell *shell)
 		{
 			if (handle_redirections(cmd->redirs) == -1)
 			{
-				shell->exit_status = 1;
+				shell->last_exit_status = 1;
 				return ;
 			}
 		}
-		shell->exit_status = exec_builtin(cmd, shell);
+		shell->last_exit_status = exec_builtin(cmd, shell);
 		return ;
 	}
 	pid = fork();
@@ -138,9 +138,9 @@ void	exec_simple_cmd(t_cmd *cmd, t_shell *shell)
 	}
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
-		shell->exit_status = WEXITSTATUS(status);
+		shell->last_exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
-		shell->exit_status = 128 + WTERMSIG(status);
+		shell->last_exit_status = 128 + WTERMSIG(status);
 }
 
 static int	count_cmds(t_cmd *cmds)
@@ -174,7 +174,7 @@ void exec_pipeline(t_cmd *cmds, t_shell *shell)
 		pipes[i] = malloc(sizeof(int) * 2);
 		if (!pipes[i] || pipe(pipes[i]) == -1)
 		{
-			perror_msg("pipe", NULL);
+			error_msg("pipe", NULL, ERR_PIPE);
 			while (--i >= 0)
 			{
 				close(pipes[i][0]);
@@ -182,7 +182,7 @@ void exec_pipeline(t_cmd *cmds, t_shell *shell)
 				free(pipes[i]);
 			}
 			free(pipes);
-			shell->exit_status = 1;
+			shell->last_exit_status = 1;
 			return ;
 		}
 		i++;
@@ -208,7 +208,7 @@ void exec_pipeline(t_cmd *cmds, t_shell *shell)
 		pids[i] = fork();
 		if (pids[i] == -1)
 		{
-			perror_msg("fork", NULL);
+			error_msg("fork", NULL, ERR_FORK);
 			return ;
 		}
 		if (pids[i] == 0)
@@ -237,7 +237,7 @@ void exec_pipeline(t_cmd *cmds, t_shell *shell)
 			if (is_builtin(current->args[0]))
 			{
 				(exec_builtin(current, shell));
-				exit(shell->exit_status);
+				exit(shell->last_exit_status);
 			}
 			else
 			{
@@ -263,9 +263,9 @@ void exec_pipeline(t_cmd *cmds, t_shell *shell)
 		if (i == num_cmds - 1)
 		{
 			if (WIFEXITED(status))
-				shell->exit_status = WEXITSTATUS(status);
+				shell->last_exit_status = WEXITSTATUS(status);
 			else if (WIFSIGNALED(status))
-				shell->exit_status = 128 + WTERMSIG(status);
+				shell->last_exit_status = 128 + WTERMSIG(status);
 		}
 		i++;
 	}
@@ -283,5 +283,5 @@ int	executor(t_cmd *cmds, t_shell *shell)
 	}
 	else
 		exec_pipeline(cmds, shell);
-	return (shell->exit_status);
+	return (shell->last_exit_status);
 }

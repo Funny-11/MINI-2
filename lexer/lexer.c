@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin@42.fr <marvin>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 20:42:32 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/15 06:06:06 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/28 15:20:46 by marvin@42.f      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static	t_token	*handle_operator(char *line, int *i)
 	{
 		if (line[*i + 1] == '>')
 		{
-			type = TOKEN_REDIR_OUT_APPEND;;
+			type = TOKEN_REDIR_APPEND;
 			value = ft_strdup(">>");
 			*i += 2;
 		}
@@ -134,7 +134,7 @@ static t_token	*handle_word(char *line, int *i)
 	if (!word)
 		error_exit(ERR_MALLOC);
 	cleaned = remove_quotes(word);
-	free(word);d
+	free(word);
 	if (!cleaned)
 		error_exit(ERR_MALLOC);
 	token = create_token(TOKEN_WORD, cleaned);
@@ -142,7 +142,7 @@ static t_token	*handle_word(char *line, int *i)
 	return (token);
 }
 
-t_token	*lexer(const char *line)
+t_token	*lexer(char *line)
 {
 	t_token	*tokens;
 	t_token	*new_token;

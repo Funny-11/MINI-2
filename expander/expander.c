@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin@42.fr <marvin>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 20:07:51 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/15 07:04:22 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/28 15:15:57 by marvin@42.f      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static char	*expand_var_in_string(char *str, int *i, t_env *env, int exit_status
 	*i = ft_strlen(result) - ft_strlen(str + *i);
 	return (result);
 }
-void	expand_variables(char *str, t_env *env, int exit_status)
+char	*expand_variables(char *str, t_env *env, int exit_status)
 {
 	char	*result;
 	char	*tmp;
@@ -94,12 +94,10 @@ void	expand_variables(char *str, t_env *env, int exit_status)
 
 	if (!str)
 		return (NULL);
-
 	result = ft_strdup(str);
 	i = 0;
 	in_single_quote = 0;
 	in_double_quote = 0;
-	
 	while (result[i])
 	{
 		if (result[i] == '\'' && !in_double_quote)
@@ -115,8 +113,7 @@ void	expand_variables(char *str, t_env *env, int exit_status)
 		}
 		i++;
 	}
-	free(str);
-	return (result);
+	return (free(str), result);
 }
 
 static char	*remove_quotes_after_expand(char *str)

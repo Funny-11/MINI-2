@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin@42.fr <marvin>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 20:09:11 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/15 03:58:35 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/28 15:03:16 by marvin@42.f      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static int	add_or_update_var(t_env **env, char *arg)
 		free(value);
 		return (1);
 	}
-	value = ft_strdup(equal_pos + 1);
+	value = ft_strdup(equal_sign + 1);
 	current = *env;
 	while (current)
 	{

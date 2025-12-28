@@ -12,14 +12,16 @@
 
 NAME = minishell
 
-CC = CC
+CC = cc
 
-CFLAGS = -Wall -Werror -Wextra -g -Ilibft
-INCLUDES = -I. -I./libft
+CFLAGS = -Wall -Werror -Wextra -g -Ilibft -I.
 
 #/* ───── LIBRERIE ESTERNE ───── */
 LIBFT = ./libft
-LIBFT_LIB = -L$(LIBFT) 	-lft -lreadline
+LIBFT_LIB = ./libft/libft.a
+LIBFT_LIB_LINK = -L$(LIBFT) -lft
+
+LIBS_LINK = $(LIBFT_LIB_LINK) -lreadline
 
 GREEN = \033[0;32m
 RED = \033[0;31m
@@ -29,66 +31,61 @@ RESET = \033[0m
 #/* ───── FILE SORGENTI ───── */
 #SRCS = $(shell find srcs -name "*.c")#
 
-SRCS =		./main.c \
-			./signals.c \
-			./utils/utils.c \
-			./utils/env_utils.c \
-			./utils/free.c \
-			./utils/errors.c \
-			./utils/init_env.c \
-			./redirection/redirections.c \
-			./parser/parser.c \
-			./parser/parser_utils.c \
-			./lexer/lexer.c \
-			./lexer/token_utils.c \
-			./lexer/tokens.c \
-			./executor/executor.c \
-			./executor/execute_utils.c \
-			./builtins/builtins.c \
-			./builtins/cd.c \
-			./builtins/echo.c \
-			./builtins/env.c \
-			./builtins/exit.c \
-			./builtins/export.c \
-			./builtins/pwd.c \
-			./builtins/unset.c \
+SRCS = ./builtins/builtins.c \
+	./builtins/cd.c \
+	./builtins/echo.c \
+	./builtins/env.c \
+	./builtins/exit.c \
+	./builtins/export.c \
+	./builtins/pwd.c \
+	./builtins/unset.c \
+	./executor/exec_utils.c \
+	./executor/executor.c \
+	./expander/expander.c \
+	./lexer/lexer.c \
+	./lexer/lexer_utils.c \
+	./lexer/tokens.c \
+	./main.c \
+	./parser/parser.c \
+	./parser/parser_utils.c \
+	./redirection/redirections.c \
+	./signals.c \
+	./utils/env_utils.c \
+	./utils/errors.c \
+	./utils/free.c \
+	./utils/init_env.c \
+	./utils/utils.c
 
-OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
-$(NAME): libft/libft.a $(OBJS)
-	@echo "$(YELLOW)Linking $(NAME)...$(RESET)"
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
-	@echo "$(GREEN)✓ $(NAME) created!$(RESET)"
+$(NAME): $(LIBFT_LIB) $(SRCS)
+	echo "$(YELLOW)Linking $(NAME)...$(RESET)"
+	$(CC) $(CFLAGS) $(SRCS) $(LIBS_LINK) -o $(NAME)
+	echo "$(GREEN)✓ $(NAME) created!$(RESET)"
 
-%.o: %.c
-	@echo "$(YELLOW)Compiling $<...$(RESET)"
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-
-libft/libft.a:
-	@echo "$(YELLOW)Making libft...⏳$(RESET)"
-	@make -C $(LIBFT)
-	@echo "$(GREEN)✓ Libft ready$(RESET)"
+$(LIBFT_LIB):
+	echo "$(YELLOW)Making libft...⏳$(RESET)"
+	make -C $(LIBFT)
+	echo "$(GREEN)✓ Libft ready$(RESET)"
 
 clean:
-		@echo "$(RED)Pulizia file oggetto...🧽🪣$(RESET)"
-		rm -f $(OBJS)
-		@make clean -C $(LIBFT)
+	make clean -C $(LIBFT)
 
 fclean: clean
-		@echo "$(RED)Pulizia totale...🧽🪣$(RESET)"
-		rm -f $(NAME)
-		@make fclean -C $(LIBFT)
+	echo "$(RED)Pulizia totale...🧽🪣$(RESET)"
+	rm -f $(NAME)
+	make fclean -C $(LIBFT)
 
 re: fclean all
 
 message:
-		@echo	"████████████████████████████████████████████████████████"
-		@echo	"█||M ||||I ||||N ||||I ||||S ||||H ||||E ||||L ||||L ||█"
-		@echo	"█||__||||__||||__||||__||||__||||__||||__||||__||||__||█"
-		@echo 	"█|/__\||/__\||/__\||/__\||/__\||/__\||/__\||/__\||/__\|█"
-		@echo	"████████████████████████████████████████████████████████"
-		@echo	"╬╬╬╬╬╬╬╬ START TESTING OURS FABULOUS MINISHELL ╬╬╬╬╬╬╬╬╬"
+	echo	"████████████████████████████████████████████████████████"
+	echo	"█||M ||||I ||||N ||||I ||||S ||||H ||||E ||||L ||||L ||█"
+	echo	"█||__||||__||||__||||__||||__||||__||||__||||__||||__||█"
+	echo 	"█|/__\||/__\||/__\||/__\||/__\||/__\||/__\||/__\||/__\|█"
+	echo	"████████████████████████████████████████████████████████"
+	echo	"╬╬╬╬╬╬╬╬ START TESTING OURS FABULOUS MINISHELL ╬╬╬╬╬╬╬╬╬"
 
 .PHONY: all clean fclean re
+.SILENT:

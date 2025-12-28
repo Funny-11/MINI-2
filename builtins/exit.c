@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin@42.fr <marvin>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 20:09:43 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/15 04:05:47 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/28 14:55:19 by marvin@42.f      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	builtin_exit(char **args, t_shell *shell)
 	}
 	if (args[1])
 	{
-		if (!check_numeric_arg(args[1]))
+		if (!check_numeric_arg("exit", args[1]))
 		{
 			error_msg("exit", args[1], "numeric argument required\n");
 			exit_status = 255;

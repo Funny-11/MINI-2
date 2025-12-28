@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin@42.fr <marvin>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 20:43:44 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/15 07:18:48 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/28 15:23:03 by marvin@42.f      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,10 @@ void	free_shell(t_shell *shell)
 		close(shell->stdin_backup);
 	if (shell->stdout_backup != -1)
 		close(shell->stdout_backup);
-	free(shell);
 }
 
-t_shell	*init_data(char **envp)
+t_shell	*init_data(t_shell *shell, char **envp)
 {
-	t_shell	*shell;
-
-	shell = malloc(sizeof(t_shell));
-	if (!shell)
-		error_exit(ERR_MALLOC);
 	shell->tokens = NULL;
 	shell->cmd_list = NULL;
 	shell->env = init_env(envp);
@@ -79,7 +73,7 @@ void	minishell_loop(t_shell *shell)
 		}
 		shell->cmd_list = parser(shell->tokens);
 		if (!shell->cmd_list)
-		{ 
+		{
 			free_tokens(shell->tokens);
 			shell->tokens = NULL;
 			continue ;
@@ -95,17 +89,20 @@ void	minishell_loop(t_shell *shell)
 	}
 }
 
+int	g_last_signal = INT_MIN;
+
 int	main(int argc, char **argv, char **envp)
 {
-	t_shell	*shell;
+	t_shell	shell;
 
 	(void)argc;
 	(void)argv;
-
+	g_last_signal = INT_MIN;
+	shell = (t_shell){0};
 	setup_signals();
-	shell = init_data(envp);
-	minishell_loop(shell);
-	free_shell(shell);
+	init_data(&shell, envp);
+	minishell_loop(&shell);
+	free_shell(&shell);
 	return (0);
 }
 /*

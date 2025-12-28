@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin@42.fr <marvin>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 20:42:59 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/15 05:24:55 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/28 15:21:09 by marvin@42.f      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	print_tokens(t_token *tokens)
 			type_str = "REDIR_IN";
 		else if (tokens->type == TOKEN_REDIR_OUT)
 			type_str = "REDIR_OUT";
-		else if (tokens->type == TOKEN_REDIR_OUT_APPEND)
+		else if (tokens->type == TOKEN_REDIR_APPEND)
 			type_str = "REDIR_OUT_APPEND";
 		else if (tokens->type == TOKEN_HEREDOC)
 			type_str = "HEREDOC";
