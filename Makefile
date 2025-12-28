@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+         #
+#    By: marvin@42.fr <marvin>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/30 20:06:02 by gifanell          #+#    #+#              #
-#    Updated: 2025/12/15 18:27:29 by gifanell         ###   ########.fr        #
+#    Updated: 2025/12/28 15:32:55 by marvin@42.f      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,6 +86,9 @@ message:
 	echo 	"█|/__\||/__\||/__\||/__\||/__\||/__\||/__\||/__\||/__\|█"
 	echo	"████████████████████████████████████████████████████████"
 	echo	"╬╬╬╬╬╬╬╬ START TESTING OURS FABULOUS MINISHELL ╬╬╬╬╬╬╬╬╬"
+
+valgrind: all
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=$(PWD)/good.supp --quiet ./minishell
 
 .PHONY: all clean fclean re
 .SILENT:
