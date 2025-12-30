@@ -6,7 +6,7 @@
 /*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 20:08:07 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/30 22:45:49 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/30 22:51:56 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static char	**env_to_arr(t_env *env)
 {
 	char	**envp;
-	t_env	tmp;
+	t_env	*tmp;
 	int		count;
 	int		i;
 
@@ -33,7 +33,7 @@ static char	**env_to_arr(t_env *env)
 	i = 0;
 	while (tmp)
 	{
-		envp[i] = ft_strdup(tmp->var);
+		envp[i] = ft_strdup(tmp->value);
 		if (!envp[i])
 		{
 			while (i-- >= 0)

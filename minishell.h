@@ -6,7 +6,7 @@
 /*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 03:29:03 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/30 22:35:05 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/30 22:52:14 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ typedef struct s_shell
 	t_token	*tokens; // lista di token (output del lexer)
 	t_cmd	*cmd_list; // lista di comandi (output del parser)
 	t_env	*env; // array di stringhe che sono le variabili d'ambiente
-	int		last_exit_status; // codice uscita dell'ultimo comando eseguito
+	int		exit_status; // codice uscita dell'ultimo comando eseguito
 	int		stdin_backup; // backup di stdin per ripristinarlo dopo le redirezioni
 	int		stdout_backup; // backup di stdout per ripristinarlo dopo le redirezioni
 } t_shell;
