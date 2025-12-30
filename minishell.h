@@ -6,7 +6,7 @@
 /*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 03:29:03 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/30 23:07:22 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/31 00:26:51 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ char		*get_env_value(t_env *env, const char *key);
 char		*get_env_value_from_array(char **env, char *key);
 int			count_env(char **envp);
 char		**copy_env(char **envp);
-////static int	is_valid_var_char(char c);
+//static int	is_valid_var_char(char c);
 //static char	*extract_var_name(const char *str, int *i);
 //static char *get_var_value(t_env *env, const char *var_name, int exit_status);
 //static char	*expand_var_in_string(char *str, int *i, t_env *env, int exit_status);

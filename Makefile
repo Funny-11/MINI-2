@@ -6,7 +6,7 @@
 #    By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/30 20:06:02 by gifanell          #+#    #+#              #
-#    Updated: 2025/12/15 18:27:29 by gifanell         ###   ########.fr        #
+#    Updated: 2025/12/31 00:55:49 by gifanell         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,10 +40,10 @@ SRCS =		./main.c \
 			./parser/parser.c \
 			./parser/parser_utils.c \
 			./lexer/lexer.c \
-			./lexer/token_utils.c \
+			./lexer/lexer_utils.c \
 			./lexer/tokens.c \
 			./executor/executor.c \
-			./executor/execute_utils.c \
+			./executor/exec_utils.c \
 			./builtins/builtins.c \
 			./builtins/cd.c \
 			./builtins/echo.c \
@@ -60,7 +60,7 @@ all: $(NAME)
 $(NAME): libft/libft.a $(OBJS)
 	@echo "$(YELLOW)Linking $(NAME)...$(RESET)"
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
-	@echo "$(GREEN)✓ $(NAME) created!$(RESET)"
+	@echo "$(GREEN)✓ $(NAME) created successfully!$(RESET)"
 
 %.o: %.c
 	@echo "$(YELLOW)Compiling $<...$(RESET)"

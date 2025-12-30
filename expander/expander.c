@@ -6,7 +6,7 @@
 /*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 20:07:51 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/15 07:04:22 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/31 00:25:11 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,10 +153,12 @@ static char	*expand_arg(char *arg, t_env *env, int exit_status)
 {
 	char	*expanded;
 	char	*cleaned;
+	int		*i;
 
+	i = 0;
 	if (!arg)
 		return (NULL);
-	expanded = expand_variables(arg, env, exit_status);
+	expanded = expand_var_in_string(arg, i, env, exit_status);
 	if (!expanded)
 		return (NULL);
 	cleaned = remove_quotes_after_expand(expanded);

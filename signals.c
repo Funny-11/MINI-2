@@ -6,11 +6,13 @@
 /*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 00:16:37 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/15 07:30:22 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/31 00:34:55 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_exit_status = 0;
 
 void	handle_sigint(int sig)
 {

@@ -6,7 +6,7 @@
 /*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 20:08:07 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/30 22:51:56 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/30 23:25:46 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,11 @@ static char	*find_command(char *cmd, t_env *env)
 			return (ft_strdup(cmd));
 		return (NULL);
 	}
-	path_env = get_env_value(env, "PATH");
+	path_env = NULL;
+	*path_env = get_env_value(env, "PATH");
 	if (!path_env)
 		return (NULL);
-	paths = ft_split(path_env, ':');
+	paths = ft_split(*path_env, ':');
 	if (!paths)
 		error_exit(ERR_MALLOC);
 	i = 0;
@@ -223,6 +224,7 @@ void exec_pipeline(t_cmd *cmds, t_shell *shell)
 				dup2(pipes[i][1], STDOUT_FILENO);
 			}
 			int j;
+			j = 0;
 			while (j < num_cmds - 1)
 			{
 				close(pipes[j][0]);

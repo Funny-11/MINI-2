@@ -6,7 +6,7 @@
 /*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 20:09:11 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/15 03:58:35 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/31 00:03:22 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,11 @@ static int	add_or_update_var(t_env **env, char *arg)
 		free(value);
 		return (1);
 	}
-	value = ft_strdup(equal_pos + 1);
+	value = ft_strdup(equal_sign + 1);
 	current = *env;
 	while (current)
 	{
-		if (ft_strcmp(current->key, key) == 0)
+		if (ft_strncmp(current->key, key, SIZE_MAX) == 0)
 		{
 			free(current->value);
 			current->value = value;

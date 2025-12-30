@@ -6,7 +6,7 @@
 /*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 20:42:59 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/15 05:24:55 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/30 23:11:05 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	print_tokens(t_token *tokens)
 			type_str = "REDIR_IN";
 		else if (tokens->type == TOKEN_REDIR_OUT)
 			type_str = "REDIR_OUT";
-		else if (tokens->type == TOKEN_REDIR_OUT_APPEND)
+		else if (tokens->type == TOKEN_REDIR_APPEND)
 			type_str = "REDIR_OUT_APPEND";
 		else if (tokens->type == TOKEN_HEREDOC)
 			type_str = "HEREDOC";
