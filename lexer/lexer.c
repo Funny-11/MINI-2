@@ -6,13 +6,13 @@
 /*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 20:42:32 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/15 06:06:06 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/30 22:38:21 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	skip_space(char *line, int i)
+static int	skip_space(const char *line, int i)
 {
 	while (line[i] && (line[i] == ' ' || line[i] == '\t'))
 		i++;
@@ -24,7 +24,7 @@ static int	is_operator(char c)
 	return (c == '|' || c == '<' || c == '>');
 }
 
-static	t_token	*handle_operator(char *line, int *i)
+static	t_token	*handle_operator(const char *line, int *i)
 {
 	t_token			*token;
 	t_token_type	type;
@@ -55,7 +55,7 @@ static	t_token	*handle_operator(char *line, int *i)
 	{
 		if (line[*i + 1] == '>')
 		{
-			type = TOKEN_REDIR_OUT_APPEND;;
+			type = TOKEN_REDIR_APPEND;;
 			value = ft_strdup(">>");
 			*i += 2;
 		}
@@ -134,7 +134,7 @@ static t_token	*handle_word(char *line, int *i)
 	if (!word)
 		error_exit(ERR_MALLOC);
 	cleaned = remove_quotes(word);
-	free(word);d
+	free(word);
 	if (!cleaned)
 		error_exit(ERR_MALLOC);
 	token = create_token(TOKEN_WORD, cleaned);
@@ -169,7 +169,7 @@ t_token	*lexer(const char *line)
 			return (NULL);
 		}
 	}
-	new_token = create_token(TOKEN_EOF, NULL);
+	new_token = create_token(TOKEN_END, NULL);
 	token_add_back(&tokens, new_token);
 	return (tokens);
 }

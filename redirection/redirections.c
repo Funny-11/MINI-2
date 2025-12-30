@@ -6,7 +6,7 @@
 /*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 03:20:21 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/15 18:28:47 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/22 17:22:19 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int handle_heredoc(const char *delimiter)
 
 	if (pipe(pipe_fd) == -1)
 	{
-		perror_msg("pipe", NULL);
+		error_msg("pipe", NULL, NULL);
 		return (-1);
 	}
 	setup_heredoc_signals();
@@ -98,7 +98,7 @@ static int	handle_single_redir(t_redir *redir)
 	{
 		if (dup2(fd, STDIN_FILENO) == -1)
 		{
-			perror_msg("dup2", NULL);
+			error_msg("dup2", NULL, NULL);
 			close(fd);
 			return (-1);
 		}
@@ -107,7 +107,7 @@ static int	handle_single_redir(t_redir *redir)
 	{
 		if (dup2(fd, STDOUT_FILENO) == -1)
 		{
-			perror_msg("dup2", NULL);
+			error_msg("dup2", NULL, NULL);
 			close(fd);
 			return (-1);
 		}

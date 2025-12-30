@@ -6,7 +6,7 @@
 /*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 20:08:55 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/15 03:49:19 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/30 22:43:31 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	builtin_pwd(void)
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 	{
-		error_msg("minishell", NULL, "Failed to get current directory\n");
+		error_msg("minishell", "pwd", "Failed to get current directory\n");
 		return (1);
 	}
 	ft_putendl_fd(cwd, STDOUT_FILENO);

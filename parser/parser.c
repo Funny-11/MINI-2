@@ -6,7 +6,7 @@
 /*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 20:07:34 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/15 07:11:40 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/30 22:26:02 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	is_redirection(t_token_type type)
 {
 	return (type == TOKEN_REDIR_IN || type == TOKEN_REDIR_OUT
-		|| type == TOKEN_REDIR_OUT_APPEND || type == TOKEN_HEREDOC);
+		|| type == TOKEN_REDIR_APPEND || type == TOKEN_HEREDOC);
 }
 
 int	check_syntax(t_token *tokens)
@@ -25,11 +25,11 @@ int	check_syntax(t_token *tokens)
 	current = tokens;
 	if (current->type == TOKEN_PIPE)
 		return (0);
-	while (current && current->type != TOKEN_EOF)
+	while (current && current->type != TOKEN_END)
 	{
 		if (current->type == TOKEN_PIPE)
 		{
-			if (!current->next || current->next->type == TOKEN_EOF || tmp->next->type == TOKEN_PIPE)
+			if (!current->next || current->next->type == TOKEN_END || current->next->type == TOKEN_PIPE)
 				return (0);
 		}
 		if (is_redirection(current->type))
@@ -103,10 +103,10 @@ static t_redir	*parse_redirections(t_token **current)
 		{
 			while (redirs)
 			{
-				next_redir = redirs->next;
+				new_redir = redirs->next;
 				free(redirs->filename);
 				free(redirs);
-				redirs = next_redir;
+				redirs = new_redir;
 			}
 			return (NULL);
 		}
@@ -122,7 +122,7 @@ static char	**parse_args(t_token **current)
 	int		count;
 	int		i;
 
-	count = count_args(*current);
+	count = count_tokens_args(*current);
 	args = malloc(sizeof(char *) * (count + 1));
 	if (!args)
 		error_exit(ERR_MALLOC);
@@ -161,6 +161,7 @@ t_cmd	*parser(t_token *tokens)
 {
 	t_cmd	*cmd_list;
 	t_cmd	*new_cmd;
+	t_cmd	*last;
 	t_token	*current;
 
 	if (!check_syntax(tokens))
@@ -170,7 +171,8 @@ t_cmd	*parser(t_token *tokens)
 	}
 	current = tokens;
 	cmd_list = NULL;
-	while (current && current->type != TOKEN_EOF)
+	last = NULL;
+	while (current && current->type != TOKEN_END)
 	{
 		new_cmd = parse_single_command(&current);
 		if (!new_cmd)

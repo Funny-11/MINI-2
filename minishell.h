@@ -6,7 +6,7 @@
 /*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 03:29:03 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/15 18:33:19 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/30 22:35:05 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ t_token			*create_token(t_token_type type, char *value);
 void			token_add_back(t_token **tokens, t_token *new_token);
 int				token_count(t_token *tokens);
 void			print_tokens(t_token *tokens);
-//static int		skip_space(char *line, int i);
+//static int		skip_space(const char *line, int i);
 //static int		is_operator(char c);
 //static int		find_end_word(char *line, int start);
 //static char		*remove_quotes(char *str);

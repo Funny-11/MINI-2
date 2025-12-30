@@ -6,7 +6,7 @@
 /*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 20:09:43 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/15 04:05:47 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/30 22:42:56 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	builtin_exit(char **args, t_shell *shell)
 	ft_putendl_fd("exit", STDOUT_FILENO);
 	if (count_args(args) > 2)
 	{
-		error_msg("exit", NULL, "too many arguments\n");
+		error_msg("exit", *args, "too many arguments\n");
 		return (1);
 	}
 	if (args[1])
