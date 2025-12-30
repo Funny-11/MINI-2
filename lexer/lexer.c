@@ -6,7 +6,7 @@
 /*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 20:42:32 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/30 22:38:21 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/30 23:07:33 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static	t_token	*handle_operator(const char *line, int *i)
 	return (token);
 }
 
-static int	find_end_word(char *line, int start)
+static int	find_end_word(const char *line, int start)
 {
 	int	i;
 	char	quote;
@@ -120,7 +120,7 @@ static char	*remove_quotes(char *str)
 	return (result);
 }
 
-static t_token	*handle_word(char *line, int *i)
+static t_token	*handle_word(const char *line, int *i)
 {
 	t_token	*token;
 	int		start;
