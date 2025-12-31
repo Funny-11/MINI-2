@@ -6,19 +6,19 @@
 /*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 00:16:37 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/31 00:34:55 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/31 01:21:25 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	g_exit_status = 0;
+int	g_last_signal = 0;
 
 void	handle_sigint(int sig)
 {
 	(void)sig;
 	
-	g_exit_status = 130;
+	g_last_signal = 130;
 	ft_putstr_fd("\n", STDOUT_FILENO);
 	rl_on_new_line();
 	rl_redisplay();

@@ -6,7 +6,7 @@
 /*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 20:07:51 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/31 00:25:11 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/31 01:09:55 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static char	*expand_var_in_string(char *str, int *i, t_env *env, int exit_status
 	*i = ft_strlen(result) - ft_strlen(str + *i);
 	return (result);
 }
-void	expand_variables(char *str, t_env *env, int exit_status)
+char	*expand_variables(char *str, t_env *env, int exit_status)
 {
 	char	*result;
 	char	*tmp;

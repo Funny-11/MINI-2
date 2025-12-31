@@ -6,7 +6,7 @@
 /*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 20:08:07 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/30 23:25:46 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/31 01:18:08 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ void exec_pipeline(t_cmd *cmds, t_shell *shell)
 		pipes[i] = malloc(sizeof(int) * 2);
 		if (!pipes[i] || pipe(pipes[i]) == -1)
 		{
-			error_msg("pipe", NULL, NULL);
+			error_msg("pipe", ERR_PIPE, NULL);
 			while (--i >= 0)
 			{
 				close(pipes[i][0]);
@@ -209,7 +209,7 @@ void exec_pipeline(t_cmd *cmds, t_shell *shell)
 		pids[i] = fork();
 		if (pids[i] == -1)
 		{
-			error_msg("fork", NULL, NULL);
+			error_msg("fork", ERR_FORK, NULL);
 			return ;
 		}
 		if (pids[i] == 0)

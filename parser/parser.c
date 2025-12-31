@@ -6,7 +6,7 @@
 /*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 20:07:34 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/30 22:26:02 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/31 01:16:41 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ int	check_syntax(t_token *tokens)
 	current = tokens;
 	if (current->type == TOKEN_PIPE)
 		return (0);
-	while (current && current->type != TOKEN_END)
+	while (current && current->type != TOKEN_EOF)
 	{
 		if (current->type == TOKEN_PIPE)
 		{
-			if (!current->next || current->next->type == TOKEN_END || current->next->type == TOKEN_PIPE)
+			if (!current->next || current->next->type == TOKEN_EOF || current->next->type == TOKEN_PIPE)
 				return (0);
 		}
 		if (is_redirection(current->type))
@@ -172,7 +172,7 @@ t_cmd	*parser(t_token *tokens)
 	current = tokens;
 	cmd_list = NULL;
 	last = NULL;
-	while (current && current->type != TOKEN_END)
+	while (current && current->type != TOKEN_EOF)
 	{
 		new_cmd = parse_single_command(&current);
 		if (!new_cmd)

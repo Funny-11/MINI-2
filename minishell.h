@@ -6,34 +6,34 @@
 /*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 03:29:03 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/31 00:26:51 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/31 01:20:59 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
-#define MINISHELL_H
+# define MINISHELL_H
 
 /* ======== LIBRERIE ==== */
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <fcntl.h>
-#include <sys/wait.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <dirent.h>
-#include <signal.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <errno.h>
-#include "libft.h"
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <string.h>
+# include <fcntl.h>
+# include <sys/wait.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <dirent.h>
+# include <signal.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <errno.h>
+# include "libft.h"
 
 /* ======== COSTANTI ==== */
-#define PROMPT "minishell$ "
-#define MAX_CMD_LENGTH 1024
-#define BUFF_SIZE 4096
-#define MAX_ARGS 100
+# define PROMPT "minishell$ "
+# define MAX_CMD_LENGTH 1024
+# define BUFF_SIZE 4096
+# define MAX_ARGS 100
 
 /* ======== COLORI OUTPUT ==== */
 # define RED "\033[0;31m"
@@ -45,7 +45,9 @@
 /* ======== MSG ERROR ==== */
 # define ERR_MALLOC "minishell: Memory allocation failed\n"
 # define ERR_SYNTAX "minishell: Syntax error near unexpected token\n"
-#define ERR_QUOTES "minishell: Quotes are not closed\n"
+# define ERR_QUOTES "minishell: Quotes are not closed\n"
+# define ERR_PIPE "minishell: Pipe failed\n"
+# define ERR_FORK "minishell: Fork failed\n"
 
 /* ======== DEFINIZIONI TIPI TOKEN ======== */
 typedef enum e_token_type
@@ -57,16 +59,16 @@ typedef enum e_token_type
 	TOKEN_REDIR_APPEND,
 	TOKEN_HEREDOC,
 	TOKEN_IN_QUOTE,
-	TOKEN_END
-} t_token_type;
+	TOKEN_EOF
+}	t_token_type;
 
 /* ======== STRUTTURA TOKEN ==== */
 typedef struct s_token
 {
 	t_token_type		type;
-	char			*value;
-	struct s_token	*next;
-} t_token;
+	char				*value;
+	struct s_token		*next;
+}	t_token;
 
 /* ======== STRUTTURA REDIRECTION ==== */
 typedef struct s_redir
@@ -74,7 +76,7 @@ typedef struct s_redir
 	t_token_type		type; // < o > o >> o <<
 	char				*filename; // nome del file o delimitatore
 	struct s_redir		*next;
-} t_redir;
+}	t_redir;
 
 /* ======== STRUTTURA COMANDO ==== */
 //Rappresenta un singolo comando con i suoi argomenti e redirezioni
@@ -83,15 +85,15 @@ typedef struct s_cmd
 	char			**args; // ["echo", "hello", NULL]
 	t_redir			*redirs; // lista di redirezioni
 	struct s_cmd	*next; // per le pipe
-} t_cmd;
+}	t_cmd;
 
 /* ======== VARIABILE D'AMBIENTE ==== */
 typedef struct s_env
 {
 	char				*key; // nome della variabile: ESEMPIO "PATH"
 	char				*value; // valore della variabile: ESEMPIO "/usr/bin:/bin"
-	struct s_env	*next; // puntatore alla prossima variabile
-} t_env;
+	struct s_env		*next; // puntatore alla prossima variabile
+}	t_env;
 
 /* ======== STRUTTURA SHELL ==== */
 //Rappresenta tutte le informazioni globali della shell
@@ -103,11 +105,11 @@ typedef struct s_shell
 	int		exit_status; // codice uscita dell'ultimo comando eseguito
 	int		stdin_backup; // backup di stdin per ripristinarlo dopo le redirezioni
 	int		stdout_backup; // backup di stdout per ripristinarlo dopo le redirezioni
-} t_shell;
+}	t_shell;
 
 /* ======== VARIABILE GLOBALE SEGNALI ======== */
 //Deve contenere SOLO il numero del segnale ricevuto
-extern int	g_exit_status;
+extern int	g_last_signal;
 
 /* =============== PROTOTIPI FUNZIONI ==================== */
 
@@ -145,7 +147,7 @@ char		**copy_env(char **envp);
 //static char	*extract_var_name(const char *str, int *i);
 //static char *get_var_value(t_env *env, const char *var_name, int exit_status);
 //static char	*expand_var_in_string(char *str, int *i, t_env *env, int exit_status);
-void		expand_variables(char *str, t_env *env, int exit_status);
+char		*expand_variables(char *str, t_env *env, int exit_status);
 void		expand_cmd_variables(t_cmd *cmds, t_env *env, int exit_status);
 //static char	*remove_quotes_after_expand(char *str);
 //static char	*expand_arg(char *arg, t_env *env, int exit_status);

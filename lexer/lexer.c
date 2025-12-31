@@ -6,7 +6,7 @@
 /*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 20:42:32 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/30 23:07:33 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/31 01:16:15 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ t_token	*lexer(const char *line)
 			return (NULL);
 		}
 	}
-	new_token = create_token(TOKEN_END, NULL);
+	new_token = create_token(TOKEN_EOF, NULL);
 	token_add_back(&tokens, new_token);
 	return (tokens);
 }

@@ -6,7 +6,7 @@
 /*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 03:20:21 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/22 17:22:19 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/31 01:18:29 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int handle_heredoc(const char *delimiter)
 
 	if (pipe(pipe_fd) == -1)
 	{
-		error_msg("pipe", NULL, NULL);
+		error_msg("pipe", ERR_PIPE, NULL);
 		return (-1);
 	}
 	setup_heredoc_signals();
