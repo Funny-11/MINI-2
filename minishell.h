@@ -133,7 +133,7 @@ void		print_tokens(t_token *tokens);
 //static t_token	*handle_operator(char *line, int *i);
 
 /* ======== PARSER / ANALISI SINTASSI ==== */
-t_cmd		*parser(t_token *tokens);
+t_cmd		*parser(t_shell *shell, t_token *tokens);
 int			check_syntax(t_token *tokens);
 
 t_cmd		*cmd_list_add_back(t_cmd **cmds, t_cmd *new_cmd);

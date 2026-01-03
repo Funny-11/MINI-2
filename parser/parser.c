@@ -163,7 +163,7 @@ static t_cmd	*parse_single_command(t_token **current)
 	return (cmd);
 }
 
-t_cmd	*parser(t_token *tokens)
+t_cmd	*parser(t_shell *shell, t_token *tokens)
 {
 	t_cmd	*cmd_list;
 	t_cmd	*new_cmd;
@@ -172,7 +172,7 @@ t_cmd	*parser(t_token *tokens)
 
 	if (!check_syntax(tokens))
 	{
-		free_tokens(tokens);
+		free_shell(shell);
 		error_exit(ERR_SYNTAX);
 	}
 	current = tokens;

@@ -74,7 +74,7 @@ void	minishell_loop(t_shell *shell)
 			shell->tokens = NULL;
 			continue ;
 		}
-		shell->cmd_list = parser(shell->tokens);
+		shell->cmd_list = parser(shell, shell->tokens);
 		if (!shell->cmd_list)
 		{
 			free_tokens(shell->tokens);

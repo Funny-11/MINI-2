@@ -123,7 +123,7 @@ void	exec_simple_cmd(t_cmd *cmd, t_shell *shell)
 		if (cmd->redirs)
 		{
 			if (handle_redirections(cmd->redirs) == -1)
-				exit(1);
+				return (free_shell(shell), exit(1));
 		}
 		execute_external_cmd(cmd, shell);
 	}
@@ -224,11 +224,12 @@ void exec_pipeline(t_cmd *cmds, t_shell *shell)
 			if (current->redirs)
 			{
 				if (handle_redirections(current->redirs) == -1)
-					exit(1);
+					return (free_shell(shell), exit(1));
 			}
 			if (is_builtin(current->args[0]))
 			{
 				(exec_builtin(current, shell));
+				free_shell(shell);
 				exit(shell->exit_status);
 			}
 			else
