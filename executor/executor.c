@@ -16,35 +16,26 @@ static char	**env_to_arr(t_env *env)
 {
 	char	**envp;
 	t_env	*tmp;
-	int		count;
 	int		i;
 
-	count = 0;
-	tmp = env;
-	while (tmp)
-	{
-		count++;
-		tmp = tmp->next;
-	}
-	envp = malloc(sizeof(char *) * (count + 1));
+	envp = ft_calloc(env_size(env) + 1, sizeof(char *));
 	if (!envp)
 		error_exit(ERR_MALLOC);
 	tmp = env;
 	i = 0;
 	while (tmp)
 	{
-		envp[i] = ft_strdup(tmp->value);
-		if (!envp[i])
+		envp[i] = ft_strjoin(tmp->key, "=");
+		envp[i] = ft_strjoin_gnl(envp[i], tmp->value);
+		if (!envp[i] || ft_strlen(envp[i]) <= ft_strlen(tmp->value)) // lazy check if the first malloc failed
 		{
-			while (i-- >= 0)
+			while (--i >= 0)
 				free(envp[i]);
-			free(envp);
-			error_exit(ERR_MALLOC);
+			return (free(envp), error_exit(ERR_MALLOC), NULL);
 		}
 		i++;
 		tmp = tmp->next;
 	}
-	envp[i] = NULL;
 	return (envp);
 }
 
