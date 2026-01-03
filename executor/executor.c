@@ -85,7 +85,7 @@ static void	execute_external_cmd(t_cmd *cmd, t_shell *shell)
 	cmd_path = find_command(cmd->args[0], shell->env);
 	if (!cmd_path)
 	{
-		handle_execve_error(cmd->args[0]);
+		handle_execve_error(shell, cmd->args[0]);
 	}
 	envp = env_to_arr(shell->env);
 	if (!envp)
@@ -93,7 +93,7 @@ static void	execute_external_cmd(t_cmd *cmd, t_shell *shell)
 	execve(cmd_path, cmd->args, envp);
 	free(cmd_path);
 	free_split(envp);
-	handle_execve_error(cmd->args[0]);
+	handle_execve_error(shell, cmd->args[0]);
 }
 
 void	exec_simple_cmd(t_cmd *cmd, t_shell *shell)

@@ -46,16 +46,18 @@ void	error_msg(char *cmd, char *arg, char *msg)
 	ft_putstr_fd(RESET, STDERR_FILENO);
 }
 
-void	handle_execve_error(char *cmd)
+void	handle_execve_error(t_shell *shell, char *cmd)
 {
 	if (access(cmd, F_OK) == 0)
 	{
 		error_msg(cmd, NULL, "Permission denied\n");
+		free_shell(shell);
 		exit(126);
 	}
 	else
 	{
 		command_not_found(cmd);
+		free_shell(shell);
 		exit(127);
 	}
 }

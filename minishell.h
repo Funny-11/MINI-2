@@ -218,7 +218,7 @@ void		free_redirs(t_redir *redirs);
 /* ======== ERRORS ======= */
 void		error_exit(char *msg);
 void		error_msg(char *cmd, char *arg, char *msg);
-void		handle_execve_error(char *cmd);
+void		handle_execve_error(t_shell *shell, char *cmd);
 int			check_numeric_arg(char *cmd, char *arg);
 
 /* ======== SIGNALS ======= */
