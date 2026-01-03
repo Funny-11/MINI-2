@@ -62,10 +62,11 @@ static char	*find_command(char *cmd, t_env *env)
 			return (ft_strdup(cmd));
 		return (NULL);
 	}
-	path_env = get_env_value(env, "PATH");
+	path_env = NULL;
+	*path_env = get_env_value(env, "PATH");
 	if (!path_env)
 		return (NULL);
-	paths = ft_split(path_env, ':');
+	paths = ft_split(*path_env, ':');
 	if (!paths)
 		error_exit(ERR_MALLOC);
 	i = 0;
