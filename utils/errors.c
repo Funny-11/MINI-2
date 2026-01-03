@@ -43,6 +43,8 @@ void	error_msg(char *cmd, char *arg, char *msg)
 	}
 	if (msg)
 		ft_putstr_fd(msg, STDERR_FILENO);
+	if (msg && msg[ft_strlen(msg) - 1] != '\n')
+		ft_putstr_fd("\n", STDERR_FILENO);
 	ft_putstr_fd(RESET, STDERR_FILENO);
 }
 

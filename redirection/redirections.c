@@ -19,7 +19,7 @@ int	open_redir_in(char *file)
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{
-		error_msg("minishell", file, strerror(errno));
+		error_msg(NULL, file, strerror(errno));
 		return (-1);
 	}
 	return (fd);
@@ -32,7 +32,7 @@ int	open_redir_out(char *file)
 	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 	{
-		error_msg("minishell", file, strerror(errno));
+		error_msg(NULL, file, strerror(errno));
 		return (-1);
 	}
 	return (fd);
@@ -45,7 +45,7 @@ int	open_redir_append(char *file)
 	fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 	{
-		error_msg("minishell", file, strerror(errno));
+		error_msg(NULL, file, strerror(errno));
 		return (-1);
 	}
 	return (fd);

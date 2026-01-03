@@ -26,6 +26,9 @@ void	free_shell(t_shell *shell)
 		close(shell->stdin_backup);
 	if (shell->stdout_backup != -1)
 		close(shell->stdout_backup);
+	free(shell->prompt);
+	if (shell->prompt)
+		shell->prompt = NULL;
 }
 
 t_shell	*init_data(t_shell *shell, char **envp)

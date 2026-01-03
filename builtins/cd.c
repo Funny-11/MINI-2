@@ -88,7 +88,7 @@ int	builtin_cd(char **args, t_shell *shell)
 		path = args[1];
 	if (chdir(path) == -1)
 	{
-		error_msg("minishell", path, strerror(errno));
+		error_msg(NULL, path, strerror(errno));
 		free(oldpwd);
 		return (1);
 	}
