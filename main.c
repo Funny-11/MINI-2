@@ -42,6 +42,30 @@ t_shell	*init_data(t_shell *shell, char **envp)
 	return (shell);
 }
 
+bool	are_quotes_correctly_closed(char *str)
+{
+	int		i;
+	char	quote;
+
+	if (!str)
+		return (true);
+	i = -1;
+	quote = 0;
+	while (str[++i])
+	{
+		if ((str[i] == '\'' || str[i] == '"') && !quote)
+			quote = str[i];
+		else if (str[i] == quote)
+			quote = 0;
+	}
+	if (quote != 0)
+	{
+		error_msg(NULL, "Syntax Error", "Quotes are not closed\n");
+		return (false);
+	}
+	return true;
+}
+
 void	minishell_loop(t_shell *shell)
 {
 	while (11)
@@ -61,6 +85,12 @@ void	minishell_loop(t_shell *shell)
 			continue ;
 		}
 		add_history(shell->prompt);
+		if (!are_quotes_correctly_closed(shell->prompt))
+		{
+			free(shell->prompt);
+			shell->prompt = NULL;
+			continue ;
+		}
 		shell->prompt = expand_variables(shell->prompt, shell->env, shell->exit_status);
 		shell->tokens = lexer(shell->prompt);
 		free(shell->prompt);
