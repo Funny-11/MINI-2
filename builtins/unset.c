@@ -6,7 +6,7 @@
 /*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 20:09:22 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/15 04:01:49 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/31 00:04:30 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	remove_env_var(t_env **env, const char *key)
 	prev = NULL;
 	while (current)
 	{
-		if (ft_strcmp(current->key, key) == 0)
+		if (ft_strncmp(current->key, key, SIZE_MAX) == 0)
 		{
 			if (prev)
 				prev->next = current->next;

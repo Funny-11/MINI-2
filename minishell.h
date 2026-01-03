@@ -6,7 +6,7 @@
 /*   By: marvin@42.fr <marvin>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/01 03:29:03 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/28 15:23:17 by marvin@42.f      ###   ########.fr       */
+/*   Updated: 2025/12/31 01:20:59 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ typedef struct s_shell
 	// array di stringhe che sono le variabili d'ambiente
 	t_env	*env;
 	// codice uscita dell'ultimo comando eseguito
-	int		last_exit_status;
+	int		exit_status;
 	// backup di stdin per ripristinarlo dopo le redirezioni
 	int		stdin_backup;
 	// backup di stdout per ripristinarlo dopo le redirezioni
@@ -136,9 +136,9 @@ int			token_count(t_token *tokens);
 void		print_tokens(t_token *tokens);
 //static int		skip_space(char *line, int i);
 //static int		is_operator(char c);
-//static int		find_end_word(char *line, int start);
+//static int		find_end_word(const char *line, int start);
 //static char		*remove_quotes(char *str);
-//static t_token	*handle_word(char *line, int *i);
+//static t_token	*handle_word(const char *line, int *i);
 //static t_token	*handle_operator(char *line, int *i);
 
 /* ======== PARSER / ANALISI SINTASSI ==== */
@@ -153,7 +153,7 @@ char		*get_env_value(t_env *env, const char *key);
 char		*get_env_value_from_array(char **env, char *key);
 int			count_env(char **envp);
 char		**copy_env(char **envp);
-////static int	is_valid_var_char(char c);
+//static int	is_valid_var_char(char c);
 //static char	*extract_var_name(const char *str, int *i);
 //static char *get_var_value(t_env *env, const char *var_name, int exit_status);
 // static char	*expand_var_in_string(char *str, int *i, t_env *env,

@@ -6,7 +6,7 @@
 /*   By: marvin@42.fr <marvin>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 20:43:44 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/28 15:23:03 by marvin@42.f      ###   ########.fr       */
+/*   Updated: 2025/12/30 22:55:32 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_shell	*init_data(t_shell *shell, char **envp)
 	shell->tokens = NULL;
 	shell->cmd_list = NULL;
 	shell->env = init_env(envp);
-	shell->last_exit_status = 0;
+	shell->exit_status = 0;
 	shell->stdin_backup = dup(STDIN_FILENO);
 	shell->stdout_backup = dup(STDOUT_FILENO);
 	return (shell);
@@ -66,7 +66,7 @@ void	minishell_loop(t_shell *shell)
 		if (!check_syntax(shell->tokens))
 		{
 			ft_putstr_fd(ERR_SYNTAX, STDERR_FILENO);
-			shell->last_exit_status = 2;
+			shell->exit_status = 2;
 			free_tokens(shell->tokens);
 			shell->tokens = NULL;
 			continue ;
@@ -78,8 +78,8 @@ void	minishell_loop(t_shell *shell)
 			shell->tokens = NULL;
 			continue ;
 		}
-		expand_variables((char *)shell->cmd_list, shell->env, shell->last_exit_status);
-		shell->last_exit_status = executor(shell->cmd_list, shell);
+		expand_variables((char *)shell->cmd_list, shell->env, shell->exit_status);
+		shell->exit_status = executor(shell->cmd_list, shell);
 		free_tokens(shell->tokens);
 		free_cmds(shell->cmd_list);
 		shell->tokens = NULL;

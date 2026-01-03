@@ -6,7 +6,7 @@
 /*   By: marvin@42.fr <marvin>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 20:08:07 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/28 15:13:36 by marvin@42.f      ###   ########.fr       */
+/*   Updated: 2025/12/31 01:18:08 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,11 +118,11 @@ void	exec_simple_cmd(t_cmd *cmd, t_shell *shell)
 		{
 			if (handle_redirections(cmd->redirs) == -1)
 			{
-				shell->last_exit_status = 1;
+				shell->exit_status = 1;
 				return ;
 			}
 		}
-		shell->last_exit_status = exec_builtin(cmd, shell);
+		shell->exit_status = exec_builtin(cmd, shell);
 		return ;
 	}
 	pid = fork();
@@ -138,9 +138,9 @@ void	exec_simple_cmd(t_cmd *cmd, t_shell *shell)
 	}
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
-		shell->last_exit_status = WEXITSTATUS(status);
+		shell->exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
-		shell->last_exit_status = 128 + WTERMSIG(status);
+		shell->exit_status = 128 + WTERMSIG(status);
 }
 
 static int	count_cmds(t_cmd *cmds)
@@ -174,7 +174,7 @@ void exec_pipeline(t_cmd *cmds, t_shell *shell)
 		pipes[i] = malloc(sizeof(int) * 2);
 		if (!pipes[i] || pipe(pipes[i]) == -1)
 		{
-			error_msg("pipe", NULL, ERR_PIPE);
+			error_msg("pipe", ERR_PIPE, NULL);
 			while (--i >= 0)
 			{
 				close(pipes[i][0]);
@@ -182,7 +182,7 @@ void exec_pipeline(t_cmd *cmds, t_shell *shell)
 				free(pipes[i]);
 			}
 			free(pipes);
-			shell->last_exit_status = 1;
+			shell->exit_status = 1;
 			return ;
 		}
 		i++;
@@ -208,7 +208,7 @@ void exec_pipeline(t_cmd *cmds, t_shell *shell)
 		pids[i] = fork();
 		if (pids[i] == -1)
 		{
-			error_msg("fork", NULL, ERR_FORK);
+			error_msg("fork", ERR_FORK, NULL);
 			return ;
 		}
 		if (pids[i] == 0)
@@ -223,6 +223,7 @@ void exec_pipeline(t_cmd *cmds, t_shell *shell)
 				dup2(pipes[i][1], STDOUT_FILENO);
 			}
 			int j;
+			j = 0;
 			while (j < num_cmds - 1)
 			{
 				close(pipes[j][0]);
@@ -237,7 +238,7 @@ void exec_pipeline(t_cmd *cmds, t_shell *shell)
 			if (is_builtin(current->args[0]))
 			{
 				(exec_builtin(current, shell));
-				exit(shell->last_exit_status);
+				exit(shell->exit_status);
 			}
 			else
 			{
@@ -263,9 +264,9 @@ void exec_pipeline(t_cmd *cmds, t_shell *shell)
 		if (i == num_cmds - 1)
 		{
 			if (WIFEXITED(status))
-				shell->last_exit_status = WEXITSTATUS(status);
+				shell->exit_status = WEXITSTATUS(status);
 			else if (WIFSIGNALED(status))
-				shell->last_exit_status = 128 + WTERMSIG(status);
+				shell->exit_status = 128 + WTERMSIG(status);
 		}
 		i++;
 	}
@@ -283,5 +284,5 @@ int	executor(t_cmd *cmds, t_shell *shell)
 	}
 	else
 		exec_pipeline(cmds, shell);
-	return (shell->last_exit_status);
+	return (shell->exit_status);
 }

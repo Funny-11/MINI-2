@@ -6,7 +6,7 @@
 /*   By: marvin@42.fr <marvin>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 20:09:11 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/28 15:03:16 by marvin@42.f      ###   ########.fr       */
+/*   Updated: 2025/12/31 00:03:22 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static int	add_or_update_var(t_env **env, char *arg)
 	current = *env;
 	while (current)
 	{
-		if (ft_strcmp(current->key, key) == 0)
+		if (ft_strncmp(current->key, key, SIZE_MAX) == 0)
 		{
 			free(current->value);
 			current->value = value;

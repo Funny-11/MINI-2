@@ -6,7 +6,7 @@
 /*   By: gifanell <gifanell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 20:08:46 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/15 06:30:10 by gifanell         ###   ########.fr       */
+/*   Updated: 2025/12/31 00:01:36 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	update_env_var(t_env **env, char *key, char *value)
 	current = *env;
 	while (current)
 	{
-		if (ft_strcmp(current->key, key) == 0)
+		if (ft_strncmp(current->key, key, SIZE_MAX) == 0)
 		{
 			free(current->value);
 			current->value = ft_strdup(value);
@@ -63,7 +63,7 @@ int	builtin_cd(char **args, t_shell *shell)
 	oldpwd = get_current_dir();
 	if (!oldpwd)
 		return (1);
-	if (!args[1] || ft_strcmp(args[1], "~") == 0)
+	if (!args[1] || ft_strncmp(args[1], "~", SIZE_MAX) == 0)
 	{
 		path = get_env_value(shell->env, "HOME");
 		if (!path)
@@ -73,7 +73,7 @@ int	builtin_cd(char **args, t_shell *shell)
 			return (1);
 		}
 	}
-	else if (ft_strcmp(args[1], "-") == 0)
+	else if (ft_strncmp(args[1], "-", SIZE_MAX) == 0)
 	{
 		path = get_env_value(shell->env, "OLDPWD");
 		if (!path)

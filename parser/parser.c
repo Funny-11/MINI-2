@@ -6,7 +6,7 @@
 /*   By: marvin@42.fr <marvin>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 20:07:34 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/28 15:20:10 by marvin@42.f      ###   ########.fr       */
+/*   Updated: 2025/12/31 01:16:41 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ static char	**parse_args(t_token **current)
 	int		count;
 	int		i;
 
-	count = token_count(*current);
+	count = count_tokens_args(*current);
 	args = malloc(sizeof(char *) * (count + 1));
 	if (!args)
 		error_exit(ERR_MALLOC);
@@ -167,6 +167,7 @@ t_cmd	*parser(t_token *tokens)
 {
 	t_cmd	*cmd_list;
 	t_cmd	*new_cmd;
+	t_cmd	*last;
 	t_token	*current;
 
 	if (!check_syntax(tokens))
@@ -176,6 +177,7 @@ t_cmd	*parser(t_token *tokens)
 	}
 	current = tokens;
 	cmd_list = NULL;
+	last = NULL;
 	while (current && current->type != TOKEN_EOF)
 	{
 		new_cmd = parse_single_command(&current);

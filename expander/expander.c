@@ -6,7 +6,7 @@
 /*   By: marvin@42.fr <marvin>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 20:07:51 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/28 15:15:57 by marvin@42.f      ###   ########.fr       */
+/*   Updated: 2025/12/31 01:09:55 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,10 +150,12 @@ static char	*expand_arg(char *arg, t_env *env, int exit_status)
 {
 	char	*expanded;
 	char	*cleaned;
+	int		*i;
 
+	i = 0;
 	if (!arg)
 		return (NULL);
-	expanded = expand_variables(arg, env, exit_status);
+	expanded = expand_var_in_string(arg, i, env, exit_status);
 	if (!expanded)
 		return (NULL);
 	cleaned = remove_quotes_after_expand(expanded);

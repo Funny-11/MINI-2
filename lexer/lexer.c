@@ -6,13 +6,13 @@
 /*   By: marvin@42.fr <marvin>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/30 20:42:32 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/28 15:20:46 by marvin@42.f      ###   ########.fr       */
+/*   Updated: 2025/12/31 01:16:15 by gifanell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	skip_space(char *line, int i)
+static int	skip_space(const char *line, int i)
 {
 	while (line[i] && (line[i] == ' ' || line[i] == '\t'))
 		i++;
@@ -24,7 +24,7 @@ static int	is_operator(char c)
 	return (c == '|' || c == '<' || c == '>');
 }
 
-static	t_token	*handle_operator(char *line, int *i)
+static	t_token	*handle_operator(const char *line, int *i)
 {
 	t_token			*token;
 	t_token_type	type;
@@ -55,7 +55,7 @@ static	t_token	*handle_operator(char *line, int *i)
 	{
 		if (line[*i + 1] == '>')
 		{
-			type = TOKEN_REDIR_APPEND;
+			type = TOKEN_REDIR_APPEND;;
 			value = ft_strdup(">>");
 			*i += 2;
 		}
@@ -70,7 +70,7 @@ static	t_token	*handle_operator(char *line, int *i)
 	return (token);
 }
 
-static int	find_end_word(char *line, int start)
+static int	find_end_word(const char *line, int start)
 {
 	int	i;
 	char	quote;
@@ -120,7 +120,7 @@ static char	*remove_quotes(char *str)
 	return (result);
 }
 
-static t_token	*handle_word(char *line, int *i)
+static t_token	*handle_word(const char *line, int *i)
 {
 	t_token	*token;
 	int		start;
