@@ -237,6 +237,7 @@ void		command_not_found(char *cmd);
 //static char		**parse_args(t_token **current);
 //static t_cmd	*parse_single_command(t_token **current);
 
+int			env_size(t_env *env);
 int			token_count(t_token *token_list);
 int			ft_strcmp(const char *s1, const char *s2);
 

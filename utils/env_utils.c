@@ -12,6 +12,19 @@
 
 #include "minishell.h"
 
+int	env_size(t_env *env)
+{
+	int	i;
+
+	i = 0;
+	while (env)
+	{
+		i++;
+		env = env->next;
+	}
+	return (i);
+}
+
 int	count_env(char **envp)
 {
 	int	i;
