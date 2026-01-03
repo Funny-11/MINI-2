@@ -103,6 +103,9 @@ typedef struct s_env
 //Rappresenta tutte le informazioni globali della shell
 typedef struct s_shell
 {
+	// prompt ricevuto dall'utente (pre lexer)
+	char	*prompt;
+
 	// lista di token (output del lexer)
 	t_token	*tokens;
 	// lista di comandi (output del parser)

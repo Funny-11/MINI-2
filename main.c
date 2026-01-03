@@ -41,24 +41,24 @@ t_shell	*init_data(t_shell *shell, char **envp)
 
 void	minishell_loop(t_shell *shell)
 {
-	char	*line;
-
 	while (11)
 	{
-		line = readline(GREEN "minishell$ " RESET);
-		if (!line)
+		shell->prompt = readline(GREEN "minishell$ " RESET);
+		if (!shell->prompt)
 		{
 			ft_putendl_fd("exit", STDOUT_FILENO);
 			break ;
 		}
-		if (line[0] == '\0')
+		if (shell->prompt[0] == '\0')
 		{
-			free(line);
+			free(shell->prompt);
 			continue ;
 		}
-		add_history(line);
-		shell->tokens = lexer(line);
-		free(line);
+		add_history(shell->prompt);
+		shell->prompt = expand_variables(shell->prompt, shell->env, shell->exit_status);
+		shell->tokens = lexer(shell->prompt);
+		free(shell->prompt);
+		shell->prompt = NULL;
 		if (!shell->tokens)
 		{
 			continue ;
@@ -78,7 +78,7 @@ void	minishell_loop(t_shell *shell)
 			shell->tokens = NULL;
 			continue ;
 		}
-		expand_variables((char *)shell->cmd_list, shell->env, shell->exit_status);
+		// expand_variables((char *)shell->cmd_list, shell->env, shell->exit_status);
 		shell->exit_status = executor(shell->cmd_list, shell);
 		free_tokens(shell->tokens);
 		free_cmds(shell->cmd_list);

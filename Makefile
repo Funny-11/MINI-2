@@ -88,6 +88,7 @@ message:
 	echo	"╬╬╬╬╬╬╬╬ START TESTING OURS FABULOUS MINISHELL ╬╬╬╬╬╬╬╬╬"
 
 valgrind: all
+	clear
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=$(PWD)/good.supp --quiet ./minishell
 
 .PHONY: all clean fclean re

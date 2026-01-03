@@ -149,7 +149,7 @@ static t_cmd	*parse_single_command(t_token **current)
 {
 	t_cmd	*cmd;
 
-	cmd = malloc(sizeof(t_cmd));
+	cmd = ft_calloc(1, sizeof(t_cmd));
 	if (!cmd)
 		error_exit(ERR_MALLOC);
 	// TODO: args and redirections can be interlaced,

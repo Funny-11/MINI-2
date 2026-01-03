@@ -12,8 +12,6 @@
 
 #include "minishell.h"
 
-int	g_last_signal = 0;
-
 void	handle_sigint(int sig)
 {
 	(void)sig;
