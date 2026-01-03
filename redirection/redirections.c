@@ -12,9 +12,9 @@
 
 #include "minishell.h"
 
-int open_redir_in(char *file)
+int	open_redir_in(char *file)
 {
-	int fd;
+	int	fd;
 
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
@@ -25,9 +25,9 @@ int open_redir_in(char *file)
 	return (fd);
 }
 
-int open_redir_out(char *file)
+int	open_redir_out(char *file)
 {
-	int fd;
+	int	fd;
 
 	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
@@ -38,9 +38,9 @@ int open_redir_out(char *file)
 	return (fd);
 }
 
-int open_redir_append(char *file)
+int	open_redir_append(char *file)
 {
-	int fd;
+	int	fd;
 
 	fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
@@ -51,7 +51,7 @@ int open_redir_append(char *file)
 	return (fd);
 }
 
-static int handle_heredoc(const char *delimiter)
+static int	handle_heredoc(const char *delimiter)
 {
 	char	*line;
 	int		pipe_fd[2];
@@ -80,7 +80,7 @@ static int handle_heredoc(const char *delimiter)
 
 static int	handle_single_redir(t_redir *redir)
 {
-	int fd;
+	int	fd;
 
 	if (redir->type == TOKEN_REDIR_IN)
 		fd = open_redir_in(redir->filename);
@@ -116,7 +116,7 @@ static int	handle_single_redir(t_redir *redir)
 	return (0);
 }
 
-int handle_redirections(t_redir *redirs)
+int	handle_redirections(t_redir *redirs)
 {
 	t_redir	*current;
 
