@@ -25,6 +25,8 @@ static int	is_n_flag(char *arg)
 			return (0);
 		i++;
 	}
+	if (i == 1)
+		return (0);
 	return (1);
 }
 int	builtin_echo(char **args)
@@ -34,7 +36,7 @@ int	builtin_echo(char **args)
 
 	i = 1;
 	newline = 1;
-	if (args[i] && is_n_flag(args[i]))
+	while (args[i] && is_n_flag(args[i]))
 	{
 		newline = 0;
 		i++;

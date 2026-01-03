@@ -52,6 +52,7 @@ void	minishell_loop(t_shell *shell)
 		if (shell->prompt[0] == '\0')
 		{
 			free(shell->prompt);
+			shell->prompt = NULL;
 			continue ;
 		}
 		add_history(shell->prompt);
