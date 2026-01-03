@@ -40,6 +40,9 @@ int		ft_isascii(int c);
 int		ft_isprint(int c);
 int		ft_toupper(int c);
 int		ft_tolower(int c);
+/**
+ * NULL safe strlen. Returns the size (character count) of the given string `s`
+ */
 size_t	ft_strlen(const char *s);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
