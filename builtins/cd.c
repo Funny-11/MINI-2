@@ -68,7 +68,7 @@ int	builtin_cd(char **args, t_shell *shell)
 		path = get_env_value(shell->env, "HOME");
 		if (!path)
 		{
-			error_msg("minishell", "cd", "HOME not set");
+			error_msg("cd", NULL, "HOME not set\n");
 			free(oldpwd);
 			return (1);
 		}
@@ -78,7 +78,7 @@ int	builtin_cd(char **args, t_shell *shell)
 		path = get_env_value(shell->env, "OLDPWD");
 		if (!path)
 		{
-			error_msg("minishell", "cd", "OLDPWD not set");
+			error_msg("cd", NULL, "OLDPWD not set\n");
 			free(oldpwd);
 			return (1);
 		}
