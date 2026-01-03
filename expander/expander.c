@@ -76,10 +76,9 @@ static char	*expand_var_in_string(char *str, int *i, t_env *env, int exit_status
 	var_value = get_var_value(env, var_name, exit_status);
 	free(var_name);
 	after = ft_strdup(str + *i);
-	result = ft_strjoin(before, var_value);
-	free(before);
+	result = ft_strjoin_gnl(before, var_value);
 	free(var_value);
-	result = ft_strjoin(result, after);
+	result = ft_strjoin_gnl(result, after);
 	free(after);
 	*i = ft_strlen(result) - ft_strlen(str + *i);
 	return (result);
