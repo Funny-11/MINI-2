@@ -100,7 +100,7 @@ static char	*remove_quotes(char *str)
 	int		j;
 	char	quote;
 
-	result = malloc(sizeof(char) * (ft_strlen(str) + 1));
+	result = ft_calloc(ft_strlen(str) + 1, sizeof(char));
 	if (!result)
 		error_exit(ERR_MALLOC);
 	i = 0;
@@ -116,7 +116,6 @@ static char	*remove_quotes(char *str)
 			result[j++] = str[i];
 		i++;
 	}
-	result[j] = '\0';
 	return (result);
 }
 
