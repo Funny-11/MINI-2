@@ -1,23 +1,12 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: marvin@42.fr <marvin>                      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/06 00:16:37 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/31 01:21:25 by gifanell         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
 void	handle_sigint(int sig)
 {
 	(void)sig;
 
-	g_last_signal = 130;
+	g_last_signal = sig;
 	ft_putstr_fd("\n", STDOUT_FILENO);
+	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
 }

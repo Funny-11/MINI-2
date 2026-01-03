@@ -43,7 +43,9 @@ void	minishell_loop(t_shell *shell)
 {
 	while (11)
 	{
+		setup_signals();
 		shell->prompt = readline(GREEN "minishell$ " RESET);
+		update_exit_status_from_last_signal(shell);
 		if (!shell->prompt)
 		{
 			ft_putendl_fd("exit", STDOUT_FILENO);
@@ -100,7 +102,6 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	g_last_signal = INT_MIN;
 	shell = (t_shell){0};
-	setup_signals();
 	init_data(&shell, envp);
 	minishell_loop(&shell);
 	free_shell(&shell);

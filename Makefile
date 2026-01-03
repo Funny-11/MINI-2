@@ -54,6 +54,7 @@ SRCS = ./builtins/builtins.c \
 	./utils/errors.c \
 	./utils/free.c \
 	./utils/init_env.c \
+	./utils/signal_utils.c \
 	./utils/utils.c
 
 

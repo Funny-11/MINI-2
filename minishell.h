@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: marvin@42.fr <marvin>                      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/01 03:29:03 by gifanell          #+#    #+#             */
-/*   Updated: 2025/12/31 01:20:59 by gifanell         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -239,6 +227,8 @@ void		command_not_found(char *cmd);
 
 int			env_size(t_env *env);
 int			token_count(t_token *token_list);
+void		update_exit_status_from_last_signal(t_shell *shell);
+
 int			ft_strcmp(const char *s1, const char *s2);
 
 #endif
